@@ -1,15 +1,14 @@
 ### Date created
-Include the date you created this project and README file.
+05/15/2020
 
 ### Project Title
-Replace the Project Title
+Git learning project
 
 ### Description
-Describe what your project is about and what it does
+Git project use the bikeshare python code to simulate the git process for a project.
 
 ### Files used
-Include the files used
+bikeshare.py
 
 ### Credits
-It's important to give proper credit. Add links to any repo that inspired you or blogposts you consulted.
-
+https://classroom.udacity.com/nanodegrees/nd104
