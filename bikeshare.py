@@ -59,11 +59,13 @@ def get_filters():
     if filter_option in ['day', 'both']:
         while True:
             day = input('Which day? Please type your response as an integer (e.g. 1=Sunday).\n')
+
             try:
                 dayint = int(day)
             except ValueError:
                 print('Please input an integer value!')
                 continue
+
             if dayint in range(1, 8):
                 day = dayint
                 break
