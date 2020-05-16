@@ -62,11 +62,13 @@ def get_filters():
     if filter_option in ['day', 'both']:
         while True:
             day = input('Which day? Please type your response as an integer (e.g. 1=Sunday).\n')
+
             try:
                 dayint = int(day)
             except ValueError:
                 print('Please input an integer value!')
                 continue
+
             if dayint in range(1, 8):
                 day = dayint
                 break
@@ -122,7 +124,7 @@ def time_stats(df):
     common_start_hour = df['Start Time'].dt.hour.mode()[0]
     print('The most common hour is {}.\n'.format(common_start_hour))
 
-    print("\nThis took %s seconds." % (time.time() - start_time))
+    print_time_cost(start_time)
     print('-'*40)
 
 
@@ -143,7 +145,7 @@ def station_stats(df):
     print('The most frequent combination of start station and end station trip is:\n{}\n'
     .format(stations))
 
-    print("\nThis took %s seconds." % (time.time() - start_time))
+    print_time_cost(start_time)
     print('-'*40)
 
 
@@ -159,7 +161,7 @@ def trip_duration_stats(df):
     # Display mean travel time
     print('The mean travel time is {}.\n'.format(df['Trip Duration'].mean()))
 
-    print("\nThis took %s seconds." % (time.time() - start_time))
+    print_time_cost(start_time)
     print('-'*40)
 
 
@@ -186,27 +188,31 @@ def user_stats(df):
     else:
         print('Birth Year data is not available for this dataset.\n')
 
-    print("\nThis took %s seconds." % (time.time() - start_time))
+    print_time_cost(start_time)
     print('-'*40)
 
 def display_raw_data(df):
     df['Start Time'] = df['Start Time'].apply(lambda x: x.strftime('%Y-%m-%d %H:%M:%S'))
     df.drop(['month', 'day_of_week'], axis = 1, inplace = True)
     index = 1
+    display_row_num = 5
     while True:
-        if index + 5 < df.shape[0]:
-            print(df.iloc[index:index + 5].to_json(orient='records', lines=True).replace(',', ',\n'))
+        if index + display_row_num < df.shape[0]:
+            print(df.iloc[index:index + display_row_num].to_json(orient='records', lines=True).replace(',', ',\n'))
         else:
             print(df.iloc[index:].to_json(orient='records', lines=True).replace(',', ',\n'))
             break
         more_lines = input('\nWould you like to view individual trip data? Type \'yes\' or \'no\'.\n').lower()
         if more_lines == 'yes':
-            index += 5
+            index += display_row_num
             continue
         elif more_lines == 'no':
             break
         else:
             print(generate_warning_message(more_lines, 'input'))
+
+def print_time_cost(start_time):
+    print("\nThis took %s seconds." % (time.time() - start_time))
 
 def main():
     while True:
