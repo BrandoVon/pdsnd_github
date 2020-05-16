@@ -192,15 +192,16 @@ def display_raw_data(df):
     df['Start Time'] = df['Start Time'].apply(lambda x: x.strftime('%Y-%m-%d %H:%M:%S'))
     df.drop(['month', 'day_of_week'], axis = 1, inplace = True)
     index = 1
+    display_row_num = 5
     while True:
-        if index + 5 < df.shape[0]:
-            print(df.iloc[index:index + 5].to_json(orient='records', lines=True).replace(',', ',\n'))
+        if index + display_row_num < df.shape[0]:
+            print(df.iloc[index:index + display_row_num].to_json(orient='records', lines=True).replace(',', ',\n'))
         else:
             print(df.iloc[index:].to_json(orient='records', lines=True).replace(',', ',\n'))
             break
         more_lines = input('\nWould you like to view individual trip data? Type \'yes\' or \'no\'.\n').lower()
         if more_lines == 'yes':
-            index += 5
+            index += display_row_num
             continue
         elif more_lines == 'no':
             break
